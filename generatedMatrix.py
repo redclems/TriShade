@@ -36,14 +36,11 @@ def hexa_for_each_char(message):
     return [18] + [int(x, 16) for dual in valHexaDual for x in dual] + [19]
 
 
-def matrice(message):
-
-    codeHexa = hexa_for_each_char(message)
-    nbData = len(codeHexa)
-    print(codeHexa)
-
-    ligne, colone = trouverTailleMatrice(nbData)
-
+def matriceNormal(ligne, colone, codeHexa, nbData):
+    """
+    generer la matrice avec les donnée mais sans systeme de
+    verification ni dupication de donner
+    """
     matrice = [[64 for _ in range(colone)] for _ in range(ligne)]
 
     value = 0
@@ -52,13 +49,48 @@ def matrice(message):
             if(value < len(codeHexa)):
                 matrice[j][i] = codeHexa[value]
                 value+=1
-
-            
     return matrice
 
-mat = matrice("Salut a tous c'est daVide l'afar@ge pokemon")
-print(mat)
+def matriceReverce(ligne, colone, codeHexa, nbData):
+    """
+    generer la matrice avec les donnée mais sans systeme de
+    verification ni dupication de donner. sauf qu'elle tourner 
+    de 90° en sens anti horaire et la meme nombre de ligne et de colone
+    que la matrice normal
+    """
+    matrice = [[64 for _ in range(colone)] for _ in range(ligne)]
+
+    value = ligne-1
+    for j in range(ligne):
+        for i in range(colone):
+            if(value < len(codeHexa)):
+                matrice[j][i] = codeHexa[value]
+                value+=ligne
+        value = ligne-(1+j+1)
+    return matrice
+
+
+def makeMatrice(message):
+    codeHexa = hexa_for_each_char(message)
+    nbData = len(codeHexa)
+
+    ligne, colone = trouverTailleMatrice(nbData)
+
+    matN = matriceNormal(ligne, colone, codeHexa, nbData)
+    for l in matN:
+        print(l)
+
+    matR = matriceReverce(ligne, colone, codeHexa, nbData)
+    for l in matR:
+        print(l)
+
+    return matN
+
+
+mat = makeMatrice("ABCDEFGHIJKL@")
+
 
 import generatedSVG
 
-generatedSVG.drawTriShade(mat, "Salut a tous c'est daVide l'afar@ge pokemon")
+generatedSVG.drawTriShade(mat, "mat1")
+
