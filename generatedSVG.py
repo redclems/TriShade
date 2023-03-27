@@ -79,6 +79,7 @@ def drawTriShade(matrice, name="trishade"):
 	n = len(matrice[0])
 	m = len(matrice)
 
+
 	triShade = svgwrite.Drawing('TriShade/' + name + ".svg", size=(10*t*n,10*t*m))
 
 	for j in range(m):

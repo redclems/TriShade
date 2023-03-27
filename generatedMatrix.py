@@ -69,25 +69,40 @@ def matriceReverce(ligne, colone, codeHexa, nbData):
         value = ligne-(1+j+1)
     return matrice
 
+def matrice2DInfoTriShade(ligne, colone, codeHexa, nbData):
+    """
+    créer la bande en bas du QRCode qui verifie l'integriter des donnée
+    """
+    if(colone <= 2):
+        return [48] + [ligne]
+    elif(colone <= 3):
+        return [48] + [ligne] + [colone]
+    elif(colone > 4):
+        return [48] + [ligne] + [colone] + [64] * (colone-3) 
 
 def makeMatrice(message):
     codeHexa = hexa_for_each_char(message)
     nbData = len(codeHexa)
 
     ligne, colone = trouverTailleMatrice(nbData)
+    if(ligne >= 16 or colone >= 16):
+        print("matrixOutOfRange")
+        return None
+    else:
+        matN = matriceNormal(ligne, colone, codeHexa, nbData)
 
-    matN = matriceNormal(ligne, colone, codeHexa, nbData)
-    for l in matN:
-        print(l)
+        matR = matriceReverce(ligne, colone, codeHexa, nbData)
 
-    matR = matriceReverce(ligne, colone, codeHexa, nbData)
-    for l in matR:
-        print(l)
+        combined_matrix = [row1 + row2 for row1, row2 in zip(matN, matR)]
 
-    return matN
+        matV = matrice2DInfoTriShade(ligne, colone, codeHexa, nbData)
+
+        combined_matrix.append(matV + matV[::-1])
+
+        return combined_matrix
 
 
-mat = makeMatrice("ABCDEFGHIJKL@")
+mat = makeMatrice("ABCDEFGHIdhdguihujdjsqhdjfhqsjhkdhjkqzshjkdnbjkazhujeidhjhqdjkqhsjkldhjqjskhdjkhjhkhdsjkhqjkshdjjkhJKL@")
 
 
 import generatedSVG
