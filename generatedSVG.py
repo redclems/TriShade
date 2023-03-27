@@ -57,17 +57,22 @@ def makePixel(colone, ligne, v, draw):
 			draw.add(draw.polygon(triangle, fill=blanc, stroke="#000000", opacity=1))
 
 		return draw
-
-	draw = foundColorTriangle(v, color, draw, trans_triangle1, t1Noir)
-	draw = foundColorTriangle(v, color, draw, trans_triangle2, t2Noir)
-	draw = foundColorTriangle(v, color, draw, trans_triangle3, t3Noir)
-	draw = foundColorTriangle(v, color, draw, trans_triangle4, t4Noir)
+	if(v != 64):
+		draw = foundColorTriangle(v, color, draw, trans_triangle1, t1Noir)
+		draw = foundColorTriangle(v, color, draw, trans_triangle2, t2Noir)
+		draw = foundColorTriangle(v, color, draw, trans_triangle3, t3Noir)
+		draw = foundColorTriangle(v, color, draw, trans_triangle4, t4Noir)
+	else:
+		draw.add(draw.polygon(trans_triangle1, fill=color[3], stroke="#000000", opacity=1))
+		draw.add(draw.polygon(trans_triangle2, fill=color[2], stroke="#000000", opacity=1))
+		draw.add(draw.polygon(trans_triangle3, fill=color[1], stroke="#000000", opacity=1))
+		draw.add(draw.polygon(trans_triangle4, fill=color[0], stroke="#000000", opacity=1))
 
 	return draw
 
 
 
-def drawTriShade(matrice, name="trishade.svg"):
+def drawTriShade(matrice, name="trishade"):
 	"""
 	dessine une un TriShade grace a une matrice d'entier de 0 a 64 non comprit
 	"""
@@ -75,7 +80,7 @@ def drawTriShade(matrice, name="trishade.svg"):
 	m = len(matrice)
 
 	print(n, m)
-	triShade = svgwrite.Drawing('TriShade/' + name, size=(10*t*n,10*t*m))
+	triShade = svgwrite.Drawing('TriShade/' + name + ".svg", size=(10*t*n,10*t*m))
 
 	for j in range(m):
 		for i in range(n):
@@ -83,7 +88,7 @@ def drawTriShade(matrice, name="trishade.svg"):
 
 	triShade.save()
 
-
+"""
 m = random.randint(3, 15)#ligne
 n = random.randint(3, 15)#colonne
 
@@ -91,6 +96,7 @@ matrice = [[random.randint(0, 15) for j in range(m)] for i in range(n)]
 print(matrice)
 
 drawTriShade(matrice, name="trishade.svg")
+"""
 
 """
 triShade = svgwrite.Drawing('TriShade/triShade.svg', size=(10*t*16,10*t*4))
