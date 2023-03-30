@@ -1,4 +1,4 @@
-import generatedSVG as generateur
+import generatedSVG.SVG4CouleurBase16 as generateur
 
 
 def trouverTailleMatrice(n):
@@ -29,14 +29,20 @@ def trouverTailleMatrice(n):
         print("erreur imposible !")
         return 2, 2
 
-def hexa_for_each_char(message):
+def hexa_for_each_char(message, base=16):
     """
     transforme un message en une liste contenants les valeurs hexadecimal
     de chaque char du message. et place le debut et la fin
     """
     valHexaDual = [format(ord(c), "x") for c in message]
 
-    return [generateur.debutData] + [int(x, 16) for dual in valHexaDual for x in dual] + [generateur.finData]
+    if(base == 16):
+        return [generateur.debutData] + [int(x, 16) for dual in valHexaDual for x in dual] + [generateur.finData]
+    elif(base == 255):
+        return [generateur.debutData] + [int(x, 16) for x in valHexaDual] + [generateur.finData]
+    else:
+        print("Wrong base")
+        return -1
 
 
 def matriceNormal(ligne, colone, codeHexa, nbData):
@@ -84,7 +90,7 @@ def matrice2DInfoTriShade(ligne, colone, codeHexa, nbData):
         return [generateur.position] + [ligne] + [colone] + [generateur.sansData] * (colone-3) 
 
 def makeMatrice(message):
-    codeHexa = hexa_for_each_char(message)
+    codeHexa = hexa_for_each_char(message, generateur.base)
     nbData = len(codeHexa)
 
     ligne, colone = trouverTailleMatrice(nbData)
@@ -105,7 +111,7 @@ def makeMatrice(message):
         return combined_matrix
 
 
-mat = makeMatrice("ABCDEFGHIdhdguihujdjsqhdjfhqsjhkdhjkqzshjkdnbjkazhujeidhjhqdjkqhsjkldhjqjskhdjkhjhkhdsjkhqjkshdjjkhJKL@")
+mat = makeMatrice("ABCDEFGHIdhdguihujdjsqhdjfhqsjhkdhjkqzshjkdnbjkazhujeidhjhqdjkqhsjkldhjqjskhdjkhjhkh155dsjkhqjkshdjjkhJKL@")
 
 
 

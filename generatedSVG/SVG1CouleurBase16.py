@@ -2,16 +2,17 @@ import svgwrite
 from math import *
 import random
 
+base = 16
 
-debutData = 18
-finData = 19
-sansData = 64
-position = 48
+debutData = 8
+finData = 7
+sansData = 0
+position = 11
 
 t = 10 #muttiplayer taille des pixel si = 1 la taille d'un pixel = 10/10
 
 blanc = "#FFFFFF"
-color = ['#000000', '#FF0000', '#00FF00', '#0000FF']
+color = ['#000000']
 
 def translater(input, vecTrans):
     x,y=input
@@ -25,7 +26,7 @@ def makePixel(colone, ligne, v, draw):
 	v    -> corepond a un entier qui qui permet de definire la valeur stocker dans le pixel.
 	draw -> corepond au svgwrite.Drawing créer par une librairy 
 	"""
-	if(v > 64):
+	if(v >= 16):
 		print("wrong value")
 		return draw
 
@@ -43,10 +44,10 @@ def makePixel(colone, ligne, v, draw):
 	trans_triangle4 = [translater(sommet, trans) for sommet in triangle4]
 
 	#coder les couleur en fonction de la valeur
-	t1Noir = [3,16,19,33,34,35,49,50]
-	t2Noir = [2,16,18,32,33,35,49,51]
-	t3Noir = [1,16,18,32,33,34,48,50]
-	t4Noir = [0,16,19,32,34,35,48,51]
+	t1Noir = [4,7,9,10,12,13,14,15]
+	t2Noir = [3,6,8,10,11,12,13,15]
+	t3Noir = [2,5,8,9,11,13,14,15]
+	t4Noir = [1,5,6,7,11,12,14,15]
 
 	def foundColorTriangle(v, color, draw, triangle, tab):
 		"""
@@ -63,16 +64,11 @@ def makePixel(colone, ligne, v, draw):
 			draw.add(draw.polygon(triangle, fill=blanc, stroke="#000000", opacity=1))
 
 		return draw
-	if(v != 64):
-		draw = foundColorTriangle(v, color, draw, trans_triangle1, t1Noir)
-		draw = foundColorTriangle(v, color, draw, trans_triangle2, t2Noir)
-		draw = foundColorTriangle(v, color, draw, trans_triangle3, t3Noir)
-		draw = foundColorTriangle(v, color, draw, trans_triangle4, t4Noir)
-	else:
-		draw.add(draw.polygon(trans_triangle1, fill=color[3], stroke="#000000", opacity=1))
-		draw.add(draw.polygon(trans_triangle2, fill=color[2], stroke="#000000", opacity=1))
-		draw.add(draw.polygon(trans_triangle3, fill=color[1], stroke="#000000", opacity=1))
-		draw.add(draw.polygon(trans_triangle4, fill=color[0], stroke="#000000", opacity=1))
+
+	draw = foundColorTriangle(v, color, draw, trans_triangle1, t1Noir)
+	draw = foundColorTriangle(v, color, draw, trans_triangle2, t2Noir)
+	draw = foundColorTriangle(v, color, draw, trans_triangle3, t3Noir)
+	draw = foundColorTriangle(v, color, draw, trans_triangle4, t4Noir)
 
 	return draw
 
@@ -86,7 +82,7 @@ def drawTriShade(matrice, name="trishade"):
 	m = len(matrice)
 
 
-	triShade = svgwrite.Drawing('TriShade/' + name + ".svg", size=(10*t*n,10*t*m))
+	triShade = svgwrite.Drawing('TriShade/' + name + "_16_1.svg", size=(10*t*n,10*t*m))
 
 	for j in range(m):
 		for i in range(n):
