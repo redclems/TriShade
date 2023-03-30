@@ -1,3 +1,6 @@
+import generatedSVG as generateur
+
+
 def trouverTailleMatrice(n):
     """
     trouve avec le nombre de donner la taille de la matrice
@@ -33,7 +36,7 @@ def hexa_for_each_char(message):
     """
     valHexaDual = [format(ord(c), "x") for c in message]
 
-    return [18] + [int(x, 16) for dual in valHexaDual for x in dual] + [19]
+    return [generateur.debutData] + [int(x, 16) for dual in valHexaDual for x in dual] + [generateur.finData]
 
 
 def matriceNormal(ligne, colone, codeHexa, nbData):
@@ -41,7 +44,7 @@ def matriceNormal(ligne, colone, codeHexa, nbData):
     generer la matrice avec les donnée mais sans systeme de
     verification ni dupication de donner
     """
-    matrice = [[64 for _ in range(colone)] for _ in range(ligne)]
+    matrice = [[generateur.sansData for _ in range(colone)] for _ in range(ligne)]
 
     value = 0
     for j in range(ligne):
@@ -58,7 +61,7 @@ def matriceReverce(ligne, colone, codeHexa, nbData):
     de 90° en sens anti horaire et la meme nombre de ligne et de colone
     que la matrice normal
     """
-    matrice = [[64 for _ in range(colone)] for _ in range(ligne)]
+    matrice = [[generateur.sansData for _ in range(colone)] for _ in range(ligne)]
 
     value = ligne-1
     for j in range(ligne):
@@ -74,11 +77,11 @@ def matrice2DInfoTriShade(ligne, colone, codeHexa, nbData):
     créer la bande en bas du QRCode qui verifie l'integriter des donnée
     """
     if(colone <= 2):
-        return [48] + [ligne]
+        return [generateur.position] + [ligne]
     elif(colone <= 3):
-        return [48] + [ligne] + [colone]
+        return [generateur.position] + [ligne] + [colone]
     elif(colone > 4):
-        return [48] + [ligne] + [colone] + [64] * (colone-3) 
+        return [generateur.position] + [ligne] + [colone] + [generateur.sansData] * (colone-3) 
 
 def makeMatrice(message):
     codeHexa = hexa_for_each_char(message)
@@ -105,7 +108,6 @@ def makeMatrice(message):
 mat = makeMatrice("ABCDEFGHIdhdguihujdjsqhdjfhqsjhkdhjkqzshjkdnbjkazhujeidhjhqdjkqhsjkldhjqjskhdjkhjhkhdsjkhqjkshdjjkhJKL@")
 
 
-import generatedSVG
 
-generatedSVG.drawTriShade(mat, "mat1")
+generateur.drawTriShade(mat, "mat1")
 

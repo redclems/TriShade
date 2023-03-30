@@ -2,6 +2,12 @@ import svgwrite
 from math import *
 import random
 
+
+debutData = 18
+finData = 19
+sansData = 64
+position = 48
+
 t = 10 #muttiplayer taille des pixel si = 1 la taille d'un pixel = 10/10
 
 blanc = "#FFFFFF"
