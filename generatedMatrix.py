@@ -29,20 +29,56 @@ def trouverTailleMatrice(n):
         print("erreur imposible !")
         return 2, 2
 
-def hexa_for_each_char(message, base=16):
+def hexa_for_each_char(message, base=16, harmming=False):
     """
     transforme un message en une liste contenants les valeurs hexadecimal
     de chaque char du message. et place le debut et la fin
     """
     valHexaDual = [format(ord(c), "x") for c in message]
+    res = list()
+    res.append(generateur.debutData)
 
+    #harmming variable
+    n = 1
+    sommeNB = 0
+    sommeNBPonderee = 0
     if(base == 16):
-        return [generateur.debutData] + [int(x, 16) for dual in valHexaDual for x in dual] + [generateur.finData]
+        for dual in valHexaDual:
+            for x in dual:
+                res.append(int(x, 16))
+                if(harmming):
+                    sommeNB += int(x, 16)
+                    sommeNBPonderee += int(x, 16) * n
+                    if(n%3 == 0):
+                        res.append(sommeNB//3)
+                        res.append(sommeNB%3)
+                        res.append(sommeNBPonderee//6)
+                        res.append(sommeNBPonderee%6)
+                        n = 0
+                        sommeNB = 0
+                        sommeNBPonderee = 0
+                    n+=1
+
+
     elif(base == 255):
-        return [generateur.debutData] + [int(x, 16) for x in valHexaDual] + [generateur.finData]
+        for x in valHexaDual:
+            res.append(int(x, 16))
+            if(harmming):
+                sommeNB += int(x, 16)
+                sommeNBPonderee += int(x, 16) * n
+                if(n%3 == 0):
+                    res.append(sommeNB//3)
+                    res.append(sommeNB%3)
+                    res.append(sommeNBPonderee//6)
+                    res.append(sommeNBPonderee%6)
+                    n = 0
+                    sommeNB = 0
+                    sommeNBPonderee = 0
+                n+=1
     else:
         print("Wrong base")
-        return -1
+    res.append(generateur.finData)
+    return res
 
 
 def matriceNormal(ligne, colone, codeHexa, nbData):
