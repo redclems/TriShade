@@ -6,6 +6,7 @@ installer la librairi svgwrite.
 creer un repertoire TriShade dans le projet.
 
 # TODO
+- Les informations spécifiques à votre protocole sont à coder dans le protocole
 - Information permettant de calculer la taille d’une cellule en pixel
 - Information permettant de connaître combien de bits sont codés dans chaque cellule
 - Si vous utilisez des couleurs, informations permettant de retrouver chacune des couleurs
