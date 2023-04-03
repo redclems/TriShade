@@ -5,7 +5,7 @@ pour lancer le projet il faut:
 installer la librairi svgwrite.
 creer un repertoire TriShade dans le projet.
 
-#TODO
+# TODO
 - Information permettant de calculer la taille d’une cellule en pixel
 - Information permettant de connaître combien de bits sont codés dans chaque cellule
 - Si vous utilisez des couleurs, informations permettant de retrouver chacune des couleurs
