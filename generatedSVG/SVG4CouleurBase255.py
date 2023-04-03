@@ -14,13 +14,14 @@ position = 48
 t = 10 #muttiplayer taille des pixel si = 1 la taille d'un pixel = 10/10
 
 blanc = "#FFFFFF"
-color = ['#000000', '#FF0000', '#00FF00', '#0000FF']
+color = ['#777777', '#770000', '#007700', '#000077']
 
-melange = {('#000000', '#FF0000'): '#eeeeee', ('#000000', '#00FF00'): '#eeeeee', ('000000', '0000FF'): '#eeeeee',
-		   ('#FF0000', '#000000'): '#eeeeee', ('#FF0000', '#00FF00'): '#FFFF00', ('FF0000', '0000FF'): '#FF00FF',
-		   ('#00FF00', '#000000'): '#eeeeee', ('#00FF00', '#FF0000'): '#FFFF00', ('00FF00', '0000FF'): '#00FFFF',
-		   ('#0000FF', '#000000'): '#eeeeee', ('#0000FF', '#FF0000'): '#00FFFF', ('0000FF', '00FF00'): '#00FFFF'
+melange = {('#777777', '#777777'): '#000000', ('#777777', '#770000'): '#FF0000', ('#777777', '#007700'): '#00FF00', ('#777777', '#000077'): '#0000FF',
+		   ('#770000', '#777777'): '#FF0000', ('#770000', '#770000'): '#FF7777', ('#770000', '#007700'): '#FFFF00', ('#770000', '#000077'): '#FF00FF',
+		   ('#007700', '#777777'): '#00FF00', ('#007700', '#770000'): '#FFFF00', ('#007700', '#007700'): '#77FF77', ('#007700', '#000077'): '#00FFFF',
+		   ('#000077', '#777777'): '#0000FF', ('#000077', '#770000'): '#00FFFF', ('#000077', '#007700'): '#00FFFF', ('#000077', '#000077'): '#7777FF'
 }
+
 
 
 def translater(input, vecTrans):
@@ -67,28 +68,39 @@ def makePixel(colone, ligne, v, draw):
 		v2 = v//16
 
 
-		e = 0
 		notFound = True
-		while notFound and e < len(color):
-			v1InTab = v1-4*e in tab
-			v2InTab = v2-4*e in tab
-			if(v1InTab and v2InTab):	
-				draw.add(draw.polygon(triangle, fill=melange[e][e], stroke="#000000", opacity=0.5))
-				notFound = False
-				draw.add(draw.polygon(triangle, fill=color[e], stroke="#000000", opacity=0.5))
-				notFound = False
 
-			elif(v1InTab):
-				draw.add(draw.polygon(triangle, fill=color[e], stroke="#000000", opacity=1))
-				notFound = False
-			elif(v2InTab):
-				draw.add(draw.polygon(triangle, fill=color[e], stroke="#000000", opacity=1))
-				notFound = False
-			e+=1
+		e1 = 0
+		c1 = None
+		notFound1 = True
+		while notFound1 and e1 < len(color):
+			if(v1-4*e1 in tab):
+				c1 = color[e1]
+				notFound1 = False
+			else:
+				e1+=1
 
-		if(notFound and makeWhite):
-			print(v, tab)
-			draw.add(draw.polygon(triangle, fill=blanc, stroke="#000000", opacity=0.5))
+		e2 = 0
+		c2 = None
+		notFound2 = True
+		while notFound2 and e2 < len(color):
+			if(v2-4*e2 in tab):
+				c2 = color[e2]
+				notFound2 = False
+			else:
+				e2+=1
+
+		if(notFound1 == False and notFound2 == False):
+
+			draw.add(draw.polygon(triangle, fill=melange[(color[e1],color[e2])], stroke="#000000", opacity=1))
+		elif(notFound1 == False):
+			draw.add(draw.polygon(triangle, fill=color[e1], stroke="#000000", opacity=1))
+		elif(notFound2 == False):
+			draw.add(draw.polygon(triangle, fill=color[e2], stroke="#000000", opacity=1))
+		elif(makeWhite):
+			draw.add(draw.polygon(triangle, fill=blanc, stroke="#000000", opacity=1))
+
+
 		return draw
 
 
