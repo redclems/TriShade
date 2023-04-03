@@ -3,10 +3,12 @@ from math import *
 import random
 
 base = 16
+nbBit = 4
 
 debutData = 18
 finData = 19
 sansData = 64
+allColor = 65
 position = 48
 
 t = 10 #muttiplayer taille des pixel si = 1 la taille d'un pixel = 10/10
@@ -26,7 +28,7 @@ def makePixel(colone, ligne, v, draw):
 	v    -> corepond a un entier qui qui permet de definire la valeur stocker dans le pixel.
 	draw -> corepond au svgwrite.Drawing créer par une librairy 
 	"""
-	if(v > 64):
+	if(v > 65):
 		print("wrong value")
 		return draw
 
@@ -60,20 +62,26 @@ def makePixel(colone, ligne, v, draw):
 				draw.add(draw.polygon(triangle, fill=color[e], stroke="#000000", opacity=1))
 				notFound = False
 			e+=1
-		if(notFound):
-			draw.add(draw.polygon(triangle, fill=blanc, stroke="#000000", opacity=1))
+		#if(notFound):
+		#	draw.add(draw.polygon(triangle, fill=blanc, stroke="#000000", opacity=1))
 
 		return draw
-	if(v != 64):
+	if(v < 64):
 		draw = foundColorTriangle(v, color, draw, trans_triangle1, t1Noir)
 		draw = foundColorTriangle(v, color, draw, trans_triangle2, t2Noir)
 		draw = foundColorTriangle(v, color, draw, trans_triangle3, t3Noir)
 		draw = foundColorTriangle(v, color, draw, trans_triangle4, t4Noir)
-	else:
-		draw.add(draw.polygon(trans_triangle1, fill=color[3], stroke="#000000", opacity=1))
-		draw.add(draw.polygon(trans_triangle2, fill=color[2], stroke="#000000", opacity=1))
-		draw.add(draw.polygon(trans_triangle3, fill=color[1], stroke="#000000", opacity=1))
-		draw.add(draw.polygon(trans_triangle4, fill=color[0], stroke="#000000", opacity=1))
+	elif(v == 64):
+		#draw.add(draw.polygon(trans_triangle1, fill="#FFFFFF", stroke="#000000", opacity=1))
+		#draw.add(draw.polygon(trans_triangle2, fill="#FFFFFF", stroke="#000000", opacity=1))
+		#draw.add(draw.polygon(trans_triangle3, fill="#FFFFFF", stroke="#000000", opacity=1))
+		#draw.add(draw.polygon(trans_triangle4, fill="#FFFFFF", stroke="#000000", opacity=1))
+		pass
+	elif(v == 65):
+		draw.add(draw.polygon(trans_triangle1, fill=color[0], stroke="#000000", opacity=1))
+		draw.add(draw.polygon(trans_triangle2, fill=color[1], stroke="#000000", opacity=1))
+		draw.add(draw.polygon(trans_triangle3, fill=color[2], stroke="#000000", opacity=1))
+		draw.add(draw.polygon(trans_triangle4, fill=color[3], stroke="#000000", opacity=1))		
 
 	return draw
 
@@ -100,13 +108,13 @@ m = random.randint(3, 15)#ligne
 n = random.randint(3, 15)#colonne
 
 matrice = [[random.randint(0, 15) for j in range(m)] for i in range(n)]
-print(matrice)
+#print(matrice)
 
-drawTriShade(matrice, name="trishade.svg")
+drawTriShade(matrice, name="trishade16.svg")
 """
 
-"""
-triShade = svgwrite.Drawing('TriShade/triShade.svg', size=(10*t*16,10*t*4))
+
+triShade = svgwrite.Drawing('TriShade/triShade16.svg', size=(10*t*16,10*t*4))
 
 #genere tout les pixel possible du protocol
 value = 0
@@ -116,4 +124,3 @@ for j in range(0,4):
 		value+=1
 
 triShade.save()
-"""

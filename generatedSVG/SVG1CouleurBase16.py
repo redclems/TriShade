@@ -3,10 +3,12 @@ from math import *
 import random
 
 base = 16
+nbBit = 4
 
 debutData = 8
 finData = 7
 sansData = 0
+allColor = 0
 position = 11
 
 t = 10 #muttiplayer taille des pixel si = 1 la taille d'un pixel = 10/10
@@ -60,8 +62,8 @@ def makePixel(colone, ligne, v, draw):
 				draw.add(draw.polygon(triangle, fill=color[e], stroke="#000000", opacity=1))
 				notFound = False
 			e+=1
-		if(notFound):
-			draw.add(draw.polygon(triangle, fill=blanc, stroke="#000000", opacity=1))
+		#if(notFound):
+		#	draw.add(draw.polygon(triangle, fill=blanc, stroke="#000000", opacity=1))
 
 		return draw
 

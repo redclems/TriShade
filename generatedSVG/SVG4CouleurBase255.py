@@ -3,16 +3,25 @@ from math import *
 import random
 
 base = 255
+nbBit = 8
 
 debutData = 18
 finData = 19
 sansData = 64
+allColor = 65
 position = 48
 
 t = 10 #muttiplayer taille des pixel si = 1 la taille d'un pixel = 10/10
 
 blanc = "#FFFFFF"
-color = ['#777777', '#FF0000', '#00FF00', '#0000FF']
+color = ['#000000', '#FF0000', '#00FF00', '#0000FF']
+
+melange = {('#000000', '#FF0000'): '#eeeeee', ('#000000', '#00FF00'): '#eeeeee', ('000000', '0000FF'): '#eeeeee',
+		   ('#FF0000', '#000000'): '#eeeeee', ('#FF0000', '#00FF00'): '#FFFF00', ('FF0000', '0000FF'): '#FF00FF',
+		   ('#00FF00', '#000000'): '#eeeeee', ('#00FF00', '#FF0000'): '#FFFF00', ('00FF00', '0000FF'): '#00FFFF',
+		   ('#0000FF', '#000000'): '#eeeeee', ('#0000FF', '#FF0000'): '#00FFFF', ('0000FF', '00FF00'): '#00FFFF'
+}
+
 
 def translater(input, vecTrans):
     x,y=input
@@ -49,30 +58,39 @@ def makePixel(colone, ligne, v, draw):
 	t3Noir = [1]
 	t4Noir = [0]
 
-	def foundColorTriangle(v, color, draw, triangle, tab):
+	def foundColorTriangle(v, color, draw, triangle, tab, makeWhite=False):
 		"""
 		return draw avec l'ajout d'un triangle de la bonne couleur
 		"""
-		def drawTriangle(v, color, draw, triangle, tab, makeWhite = True):
-			e = 0
-			notFound = True
-			while notFound and e < len(color):
-				if(v-4*e in tab):
-					draw.add(draw.polygon(triangle, fill=color[e], stroke="#000000", opacity=0.5))
-					notFound = False
-				e+=1
-			if(notFound and makeWhite):
-				print(v, tab)
-				draw.add(draw.polygon(triangle, fill=blanc, stroke="#000000", opacity=0.5))
-			return draw
 
 		v1 = v%16
 		v2 = v//16
 
-		draw = drawTriangle(v1, color, draw, triangle, tab, False);
-		draw = drawTriangle(v2, color, draw, triangle, tab);
 
+		e = 0
+		notFound = True
+		while notFound and e < len(color):
+			v1InTab = v1-4*e in tab
+			v2InTab = v2-4*e in tab
+			if(v1InTab and v2InTab):	
+				draw.add(draw.polygon(triangle, fill=melange[e][e], stroke="#000000", opacity=0.5))
+				notFound = False
+				draw.add(draw.polygon(triangle, fill=color[e], stroke="#000000", opacity=0.5))
+				notFound = False
+
+			elif(v1InTab):
+				draw.add(draw.polygon(triangle, fill=color[e], stroke="#000000", opacity=1))
+				notFound = False
+			elif(v2InTab):
+				draw.add(draw.polygon(triangle, fill=color[e], stroke="#000000", opacity=1))
+				notFound = False
+			e+=1
+
+		if(notFound and makeWhite):
+			print(v, tab)
+			draw.add(draw.polygon(triangle, fill=blanc, stroke="#000000", opacity=0.5))
 		return draw
+
 
 	draw = foundColorTriangle(v, color, draw, trans_triangle1, t1Noir)
 	draw = foundColorTriangle(v, color, draw, trans_triangle2, t2Noir)

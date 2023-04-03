@@ -82,12 +82,11 @@ def matrice2DInfoTriShade(ligne, colone, codeHexa, nbData):
     """
     créer la bande en bas du QRCode qui verifie l'integriter des donnée
     """
-    if(colone <= 2):
-        return [generateur.position] + [ligne]
-    elif(colone <= 3):
-        return [generateur.position] + [ligne] + [colone]
-    elif(colone > 4):
-        return [generateur.position] + [ligne] + [colone] + [generateur.sansData] * (colone-3) 
+    if(colone*2 <= 5):
+        print("trop Petit")
+        return None
+    elif(colone*2 >= 5):
+        return [generateur.position] + [ligne] + [colone] + [generateur.allColor] + [generateur.nbBit] + [generateur.sansData] * ((colone*2)-5) 
 
 def makeMatrice(message):
     codeHexa = hexa_for_each_char(message, generateur.base)
@@ -102,16 +101,21 @@ def makeMatrice(message):
 
         matR = matriceReverce(ligne, colone, codeHexa, nbData)
 
-        combined_matrix = [row1 + row2 for row1, row2 in zip(matN, matR)]
-
         matV = matrice2DInfoTriShade(ligne, colone, codeHexa, nbData)
 
-        combined_matrix.append(matV + matV[::-1])
+
+
+        combined_matrix = [row1 + row2 for row1, row2 in zip(matN, matR)]
+
+        combined_matrix.insert(0, matV)
+        combined_matrix.append(matV[::-1])
+
+        print(combined_matrix)
 
         return combined_matrix
 
 
-mat = makeMatrice("ABCDEFGHIdhdguihujdjsqhdjfhqsjhkdhjkqzshjkdnbjkazhujeidhjhqdjkqhsjkldhjqjskhdjkhjhkh155dsjkhqjkshdjjkhJKL@")
+mat = makeMatrice("AJFDHHBSHBDFG7474HDjdjdKJF")
 
 
 
