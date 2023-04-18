@@ -5,6 +5,8 @@ import random
 base = 16
 nbBit = 4
 
+pixel = True #pixeliser le dessin pour reduireau minimun la place
+
 debutData = 18
 finData = 19
 sansData = 64
@@ -33,13 +35,21 @@ def makePixel(colone, ligne, v, draw):
 		return draw
 
 	#créer le pixel
-	triangle1 = [(0*t,0*t) ,(10*t,5*t),(10*t,0*t) ]
-	triangle2 = [(0*t,0*t) ,(0*t,5*t) ,(10*t,5*t) ]
-	triangle3 = [(0*t,5*t) ,(0*t,10*t),(10*t,5*t) ]
-	triangle4 = [(0*t,10*t),(10*t,5*t),(10*t,10*t)]
+	if(pixel):
+		triangle1 = [(1*t,0*t), (3*t,0*t), (3*t,2*t), (2*t,2*t), (2*t,1*t), (1*t,1*t)]
+		triangle2 = [(0*t,0*t), (1*t,0*t), (1*t,1*t), (2*t,1*t), (2*t,2*t), (0*t,2*t)]
+		triangle3 = [(0*t,2*t), (2*t,2*t), (2*t,3*t), (1*t,3*t), (1*t,4*t), (0*t,4*t)]
+		triangle4 = [(2*t,2*t), (3*t,2*t), (3*t,4*t), (1*t,4*t), (1*t,3*t), (2*t,3*t)]
+		trans=(3*t)*ligne, (4*t)*colone
+	else:
+		trans=(10*t)*ligne, (10*t)*colone
+		triangle1 = [(0*t,0*t) ,(10*t,5*t),(10*t,0*t) ]
+		triangle2 = [(0*t,0*t) ,(0*t,5*t) ,(10*t,5*t) ]
+		triangle3 = [(0*t,5*t) ,(0*t,10*t),(10*t,5*t) ]
+		triangle4 = [(0*t,10*t),(10*t,5*t),(10*t,10*t)]
 
 	#translate le triangle a la position souhaiter
-	trans=(10*t)*ligne, (10*t)*colone
+
 	trans_triangle1 = [translater(sommet, trans) for sommet in triangle1]
 	trans_triangle2 = [translater(sommet, trans) for sommet in triangle2]
 	trans_triangle3 = [translater(sommet, trans) for sommet in triangle3]

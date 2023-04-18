@@ -160,5 +160,5 @@ mat = makeMatrice("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
 
 
-generateur.drawTriShade(mat, "mat1")
+generateur.drawTriShade(mat, "mat4")
 
