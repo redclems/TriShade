@@ -124,8 +124,8 @@ def matrice2DInfoTriShade(ligne, colone, codeHexa, nbData):
     elif(colone*2 >= 6):
         return [generateur.position] + [ligne] + [colone] + [generateur.allColor] + [generateur.nbBit] + [generateur.debutData] + [generateur.sansData] * ((colone*2)-6) 
 
-def makeMatrice(message):
-    codeHexa = hexa_for_each_char(message, generateur.base)
+def makeMatrice(message, harmming=True):
+    codeHexa = hexa_for_each_char(message, generateur.base, harmming)
     nbData = len(codeHexa)
 
     ligne, colone = trouverTailleMatrice(nbData)
@@ -150,15 +150,12 @@ def makeMatrice(message):
         combined_matrix.insert(0, matV)
         combined_matrix.append(matV[::-1])
 
-        print(message, combined_matrix)
+        #print(message, combined_matrix)
 
 
         return combined_matrix
 
 
-mat = makeMatrice("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-
-
-
-generateur.drawTriShade(mat, "mat4")
+#mat = makeMatrice("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+#generateur.drawTriShade(mat, "mat4")
 
