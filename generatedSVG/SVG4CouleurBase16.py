@@ -5,7 +5,7 @@ import random
 base = 16
 nbBit = 4
 
-pixel = True #pixeliser le dessin pour reduireau minimun la place
+pixel = False #pixeliser le dessin pour reduireau minimun la place
 
 debutData = 18
 finData = 19
@@ -105,7 +105,7 @@ def drawTriShade(matrice, name="trishade"):
 	m = len(matrice)
 
 
-	triShade = svgwrite.Drawing('TriShade/' + name + "_16_4.svg", size=(10*t*n,10*t*m))
+	triShade = svgwrite.Drawing('TriShade/' + name + "_16_4.svg", size=(10*t*(n),10*t*(m)))
 
 	for j in range(m):
 		for i in range(n):

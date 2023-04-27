@@ -118,11 +118,13 @@ def matrice2DInfoTriShade(ligne, colone, codeHexa, nbData):
     """
     créer la bande en bas du QRCode qui verifie l'integriter des donnée
     """
-    if(colone*2 < 6):
+    nbCaseVide = ligne*colone-nbData
+    coloneCorriger = colone*2
+    if(coloneCorriger < 5):
         print("trop Petit")
-        return [generateur.sansData] * ((colone*2))
-    elif(colone*2 >= 6):
-        return [generateur.position] + [ligne] + [colone] + [generateur.allColor] + [generateur.nbBit] + [generateur.debutData] + [generateur.sansData] * ((colone*2)-6) 
+        return [generateur.sansData] * ((coloneCorriger*2))
+    elif(coloneCorriger >= 5):
+        return [generateur.position] + [ligne] + [colone] + [nbCaseVide] + [generateur.allColor] + [generateur.sansData] * ((coloneCorriger)-5) 
 
 def makeMatrice(message, harmming=True):
     codeHexa = hexa_for_each_char(message, generateur.base, harmming)
@@ -144,7 +146,6 @@ def makeMatrice(message, harmming=True):
         matV = matrice2DInfoTriShade(ligne, colone, codeHexa, nbData)
 
 
-
         combined_matrix = [row1 + row2 for row1, row2 in zip(matN, matR)]
 
         combined_matrix.insert(0, matV)
@@ -152,10 +153,12 @@ def makeMatrice(message, harmming=True):
 
         #print(message, combined_matrix)
 
-
         return combined_matrix
 
 
-#mat = makeMatrice("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-#generateur.drawTriShade(mat, "mat4")
+mat = makeMatrice("ABC")
+generateur.drawTriShade(mat, "ABC")
+
+mat = makeMatrice("ABC")
+generateur.drawTriShade(mat, "ABC")
 

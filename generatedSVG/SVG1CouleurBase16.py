@@ -2,7 +2,7 @@ import svgwrite
 from math import *
 import random
 
-pixel = True #pixeliser le dessin pour reduireau minimun la place
+pixel = False #pixeliser le dessin pour reduireau minimun la place
 
 base = 16
 nbBit = 4
