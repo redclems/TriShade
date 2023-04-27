@@ -105,6 +105,11 @@ def matriceReverce(ligne, colone, codeHexa, nbData):
     """
     matrice = [[generateur.sansData for _ in range(colone)] for _ in range(ligne)]
 
+    nbCaseVide = ligne*colone-nbData
+
+    for t in range(nbCaseVide):
+        codeHexa.insert(0, generateur.sansData)
+
     value = ligne-1
     for j in range(ligne):
         for i in range(colone):
@@ -156,9 +161,6 @@ def makeMatrice(message, harmming=True):
         return combined_matrix
 
 
-mat = makeMatrice("ABC")
-generateur.drawTriShade(mat, "ABC")
-
-mat = makeMatrice("ABC")
+mat = makeMatrice("ABCE")
 generateur.drawTriShade(mat, "ABC")
 
